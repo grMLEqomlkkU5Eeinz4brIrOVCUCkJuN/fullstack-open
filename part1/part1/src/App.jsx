@@ -115,3 +115,13 @@ export default App
 
 // jsx is more xml like, so every element requires a closing tag, e.g. <br /> <img />
 
+// react also allows the rendering of items from arrays directly if the content within the arrays are eligible
+// const App = () => {
+// 	const friends = ['Leevi', 'Venla']
+
+// 	return (
+// 		<div>
+// 			<p>{friends}</p>
+// 		</div>
+// 	)
+//   }
