@@ -1,7 +1,9 @@
-const Hello = () => {
+const Hello = (props) => {
+
+	if (!props.name) return <div><p>Nameless</p></div>
 	return (
 		<div>
-			<p>Hello World</p>
+			<p>Hello {props.name}</p>
 		</div>
 	)
 }
@@ -10,9 +12,9 @@ const App = () => {
 	return (
 		<div>
 			<h1>Greetings</h1>
-			<Hello />
-			<Hello />
-			<Hello />
+			<Hello name="Maya"/>
+			<Hello name="Pekka"/>
+			<Hello name=""/>
 			<Hello />
 		</div>
 	)
