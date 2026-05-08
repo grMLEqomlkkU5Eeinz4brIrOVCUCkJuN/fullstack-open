@@ -1,3 +1,5 @@
+// React component names must always begin with a capital letter, attempting to create components
+// with a non-capitalized name will result in them getting treated like html elements instead
 const Hello = (props) => {
 
 	if (!props.name || !props.age) return <div><p>Nameless</p></div>
@@ -12,14 +14,38 @@ const App = () => {
 	const nimi = "Peka";
 	const ika = 10;
 
+	// react should usually contain a single root element, so if we tried to define app without an outer div, it would result in an error
 	return (
 		<div>
 			<h1>Greetings</h1>
-			<Hello name="Maya" age={26 + 10}/>
-			<Hello name={nimi} age={ika}/>
+			<Hello name="Maya" age={26 + 10} />
+			<Hello name={nimi} age={ika} />
 		</div>
 	)
 }
+// alternative syntax if needed
+// const App = () => {
+// 	return [
+// 		<h1>Greetings</h1>,
+// 		<Hello name="Maya" age={26 + 10} />,
+// 		<Footer />
+// 	]
+//   }
+
+
+// const App = () => {
+// 	const name = 'Pekka'
+// 	const age = 10
+
+// 	return (
+// 		<>
+// 			<h1>Greetings</h1>
+// 			<Hello name="Maya" age={26 + 10} />
+// 			<Hello name={name} age={age} />
+// 			<Footer />
+// 		</>
+// 	)
+// }
 
 export default App
 
