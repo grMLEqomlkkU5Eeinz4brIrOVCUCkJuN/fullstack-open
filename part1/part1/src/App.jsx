@@ -10,19 +10,19 @@ const Hello = (props) => {
 	)
 }
 
-const App = () => {
-	const nimi = "Peka";
-	const ika = 10;
+// const App = () => {
+// 	const nimi = "Peka";
+// 	const ika = 10;
 
-	// react should usually contain a single root element, so if we tried to define app without an outer div, it would result in an error
-	return (
-		<div>
-			<h1>Greetings</h1>
-			<Hello name="Maya" age={26 + 10} />
-			<Hello name={nimi} age={ika} />
-		</div>
-	)
-}
+// 	// react should usually contain a single root element, so if we tried to define app without an outer div, it would result in an error
+// 	return (
+// 		<div>
+// 			<h1>Greetings</h1>
+// 			<Hello name="Maya" age={26 + 10} />
+// 			<Hello name={nimi} age={ika} />
+// 		</div>
+// 	)
+// }
 // alternative syntax if needed
 // const App = () => {
 // 	return [
@@ -46,6 +46,25 @@ const App = () => {
 // 		</>
 // 	)
 // }
+
+
+
+// warning against rendering objects, they are not valid children
+// all rendered items must be premitives only
+
+const App = () => {
+	const friends = [
+		{ name: "Leevi", age: 4 },
+		{ name: "Venla", age: 10 }
+	];
+
+	return (
+		<div>
+			<p>{friends[0].name} {friends[0].age}</p>
+			<p>{friends[1].name} {friends[1].age}</p>
+		</div>
+	)
+}
 
 export default App
 
