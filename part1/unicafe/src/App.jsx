@@ -1,25 +1,24 @@
+import { useState } from 'react'
+
 const App = () => {
-	const course = 'Half Stack application development'
-	const part1 = 'Fundamentals of React'
-	const exercises1 = 10
-	const part2 = 'Using props to pass data'
-	const exercises2 = 7
-	const part3 = 'State of a component'
-	const exercises3 = 14
+	// save clicks of each button to its own state
+	const [good, setGood] = useState(0)
+	const [neutral, setNeutral] = useState(0)
+	const [bad, setBad] = useState(0)
 
 	return (
 		<div>
-			<h1>{course}</h1>
-			<p>
-				{part1} {exercises1}
-			</p>
-			<p>
-				{part2} {exercises2}
-			</p>
-			<p>
-				{part3} {exercises3}
-			</p>
-			<p>Number of exercises {exercises1 + exercises2 + exercises3}</p>
+			<h1>Give Feedback</h1>
+
+			<button onClick={() => setGood(good + 1)}>Good</button>
+			<button onClick={() => setNeutral(neutral + 1)}>Neutral</button>
+			<button onClick={() => setBad(bad + 1)}>Bad</button>
+
+			<h1>Statistics</h1>
+
+			<div>good {good}</div>
+			<div>neutral {neutral}</div>
+			<div>bad {bad}</div>
 		</div>
 	)
 }
