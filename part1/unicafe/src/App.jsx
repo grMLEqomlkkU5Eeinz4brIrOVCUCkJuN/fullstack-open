@@ -6,7 +6,7 @@ const Button = ({ label, onClick }) => {
 }
 
 const StatisticLine = ({ label, value }) => {
-	return <div>{label} {value}</div>
+	return <tr><td>{label}</td><td>{value}</td></tr>
 }
 
 const Statistics = ({ good, bad, neutral }) => {
@@ -15,9 +15,11 @@ const Statistics = ({ good, bad, neutral }) => {
 	if (total === 0) return <div>No feedback given</div>
 	return (
 		<div>
-			<StatisticLine label="average" value={(good - bad) / total || 0} />
-			<StatisticLine label="positive" value={(good / total * 100) || 0} />
-			<StatisticLine label="total" value={total || 0} />
+			<table>
+				<StatisticLine label="average" value={(good - bad) / total || 0} />
+				<StatisticLine label="positive" value={(good / total * 100) || 0} />
+				<StatisticLine label="total" value={total || 0} />
+			</table>
 		</div>
 	)
 }
