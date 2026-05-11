@@ -1,26 +1,26 @@
 import { useState } from 'react'
 
 
-	const Button = ({ label, onClick }) => {
-		return <button onClick={onClick}>{label}</button>
-	}
+const Button = ({ label, onClick }) => {
+	return <button onClick={onClick}>{label}</button>
+}
 
-	const StatisticLine = ({ label, value }) => {
-		return <div>{label} {value}</div>
-	}
+const StatisticLine = ({ label, value }) => {
+	return <div>{label} {value}</div>
+}
 
-	const Statistics = ({ good, bad, neutral }) => {
-		const total = good + bad + neutral || 0;
+const Statistics = ({ good, bad, neutral }) => {
+	const total = good + bad + neutral || 0;
 
-		if (total === 0) return <div>No feedback given</div>
-		return (
-			<div>
-				<StatisticLine label="average" value={(good - bad) / total || 0} />
-				<StatisticLine label="positive" value={(good / total * 100) || 0} />
-				<StatisticLine label="total" value={total || 0} />
-			</div>
-		)
-	}
+	if (total === 0) return <div>No feedback given</div>
+	return (
+		<div>
+			<StatisticLine label="average" value={(good - bad) / total || 0} />
+			<StatisticLine label="positive" value={(good / total * 100) || 0} />
+			<StatisticLine label="total" value={total || 0} />
+		</div>
+	)
+}
 
 const App = () => {
 	// save clicks of each button to its own state
