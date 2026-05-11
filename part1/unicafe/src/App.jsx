@@ -9,6 +9,8 @@ const App = () => {
 
 	const Statistics = ({ good, bad, neutral }) => {
 		const total = good + bad + neutral || 0;
+
+		if (total === 0) return <div>No feedback given</div>
 		return (
 			<div>
 				<div>average: { (good - bad) / (total) || 0 }</div>
