@@ -1,14 +1,14 @@
 // React component names must always begin with a capital letter, attempting to create components
 // with a non-capitalized name will result in them getting treated like html elements instead
-const Hello = (props) => {
+// const Hello = (props) => {
 
-	if (!props.name || !props.age) return <div><p>Nameless</p></div>
-	return (
-		<div>
-			<p>Hello {props.name}, you are {props.age} years old</p>
-		</div>
-	)
-}
+// 	if (!props.name || !props.age) return <div><p>Nameless</p></div>
+// 	return (
+// 		<div>
+// 			<p>Hello {props.name}, you are {props.age} years old</p>
+// 		</div>
+// 	)
+// }
 
 // const App = () => {
 // 	const nimi = "Peka";
@@ -52,21 +52,21 @@ const Hello = (props) => {
 // warning against rendering objects, they are not valid children
 // all rendered items must be premitives only
 
-const App = () => {
-	const friends = [
-		{ name: "Leevi", age: 4 },
-		{ name: "Venla", age: 10 }
-	];
+// const App = () => {
+// 	const friends = [
+// 		{ name: "Leevi", age: 4 },
+// 		{ name: "Venla", age: 10 }
+// 	];
 
-	return (
-		<div>
-			<p>{friends[0].name} {friends[0].age}</p>
-			<p>{friends[1].name} {friends[1].age}</p>
-		</div>
-	)
-}
+// 	return (
+// 		<div>
+// 			<p>{friends[0].name} {friends[0].age}</p>
+// 			<p>{friends[1].name} {friends[1].age}</p>
+// 		</div>
+// 	)
+// }
 
-export default App
+// export default App
 
 
 
@@ -125,3 +125,30 @@ export default App
 // 		</div>
 // 	)
 //   }
+
+// Page-re-rendering
+// const App = (props) => {
+// 	const { counter } = props;
+// 	return (
+// 		<div>{counter}</div>
+// 	)
+// }
+
+// export default App
+
+// stateful component
+import { useState } from "react";
+
+const App = () => {
+	const [ counter, setCounter ] = useState(0);
+	setTimeout(
+		() => setCounter(counter + 1),
+		1000
+	)
+
+	return (
+		<div>{counter}</div>
+	)
+}
+
+export default App
