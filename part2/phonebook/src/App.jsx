@@ -8,6 +8,11 @@ const PeopleCollection = ({ persons }) => {
 	return <div>{persons.map(person => <PersonComponent key={person.id} name={person.name} />)}</div>
 }
 
+const checkDuplicates = (nameToAdd, array) => {
+	return array.some((element) => nameToAdd === element.name );
+}
+
+
 const App = () => {
 	const [persons, setPersons] = useState([
 		{ name: 'Arto Hellas', id: 0 }
@@ -16,10 +21,13 @@ const App = () => {
 
 	const addName = (event) => {
 		event.preventDefault();
-
-		const newNameToAdd = newName;
-		setPersons(persons.concat({ name: newNameToAdd, id: persons.length }));
-		setNewName("");
+		if (checkDuplicates(newName, persons)) {
+			return alert(`${newName} is already added to phonebook`);
+			setNewName("");
+		} else {
+			setPersons(persons.concat({ name: newName, id: persons.length }));
+			setNewName("");
+		}
 	}
 
 	const handleNameChange = (event) => {
