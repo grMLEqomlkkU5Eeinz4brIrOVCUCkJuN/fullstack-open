@@ -18,22 +18,25 @@ const App = () => {
 		? persons
 		: persons.filter(person => person.name.toLowerCase().startsWith(searchTerm.toLowerCase()))
 
-	const handleAddPerson = (event) => {
+	const handleAddPerson = async (event) => {
 		event.preventDefault()
-
-		if (persons.some(person => person.name === newName)) {
-			alert(`${newName} is already added to phonebook`)
-			setNewName("")
-			setNewNumber("")
-			return
-		}
 
 		const newPerson = {
 			name: newName,
 			number: newNumber,
 		}
 
-		personService.create(newPerson).then(createdPerson => {
+		if (persons.some(person => person.name === newName)) {
+			alert(`${newName} is already added to phonebook, replace the old number with a new one?`)
+			await personService.updateUserNumberByid(newPerson, persons.find(p => p.name === newName).id)
+			// personService.getAll().then(setPersons)
+			setPersons(await personService.getAll())
+			setNewName("")
+			setNewNumber("")
+			return
+		}
+
+		await personService.create(newPerson).then(createdPerson => {
 			setPersons(persons.concat(createdPerson))
 			setNewName("")
 			setNewNumber("")
