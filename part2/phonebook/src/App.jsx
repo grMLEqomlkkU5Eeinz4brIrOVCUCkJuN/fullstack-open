@@ -3,12 +3,15 @@ import Filter from "./components/Filter"
 import PersonForm from "./components/PersonForm"
 import Persons from "./components/Persons"
 import personService from "./services/persons"
+import Notification from "./components/Notification"
+import { useNotifications } from "./hooks/NotificationsHooks"
 
 const App = () => {
 	const [persons, setPersons] = useState([])
 	const [newName, setNewName] = useState("")
 	const [newNumber, setNewNumber] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
+	const { message, setMessage } = useNotifications();
 
 	useEffect(() => {
 		personService.getAll().then(setPersons)
@@ -38,6 +41,10 @@ const App = () => {
 
 		await personService.create(newPerson).then(createdPerson => {
 			setPersons(persons.concat(createdPerson))
+			setMessage(`Added ${newPerson.name}.`);
+			setTimeout(() => {
+				setMessage(null);
+			}, 2000);
 			setNewName("")
 			setNewNumber("")
 		})
@@ -67,6 +74,7 @@ const App = () => {
 	return (
 		<div>
 			<h2>Phonebook</h2>
+			<Notification message={message} />
 			<Filter value={searchTerm} onChange={handleSearchChange} />
 
 			<h3>Add a new</h3>
