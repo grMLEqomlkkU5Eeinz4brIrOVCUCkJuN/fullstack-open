@@ -11,7 +11,7 @@ const App = () => {
 	const [newName, setNewName] = useState("")
 	const [newNumber, setNewNumber] = useState("")
 	const [searchTerm, setSearchTerm] = useState("")
-	const { message, setMessage } = useNotifications();
+	const { notification, setNotification } = useNotifications();
 
 	useEffect(() => {
 		personService.getAll().then(setPersons)
@@ -30,24 +30,37 @@ const App = () => {
 		}
 
 		if (persons.some(person => person.name === newName)) {
-			alert(`${newName} is already added to phonebook, replace the old number with a new one?`)
-			await personService.updateUserNumberByid(newPerson, persons.find(p => p.name === newName).id)
-			// personService.getAll().then(setPersons)
-			setPersons(await personService.getAll())
-			setNewName("")
-			setNewNumber("")
+			if (window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)) {
+				const existingPerson = persons.find(p => p.name === newName)
+				personService.updateUserNumberByid(newPerson, existingPerson.id)
+					.then(updatedPerson => {
+						setPersons(persons.map(p => p.id !== existingPerson.id ? p : updatedPerson))
+						setNotification({ message: `Updated ${updatedPerson.name}.`, type: "success" });
+						setTimeout(() => setNotification({ message: null, type: "success" }), 5000);
+						setNewName("")
+						setNewNumber("")
+					})
+					.catch(error => {
+						setNotification({ message: `Information of ${newName} has already been removed from server`, type: "error" });
+						setTimeout(() => setNotification({ message: null, type: "success" }), 5000);
+						setPersons(persons.filter(p => p.id !== existingPerson.id))
+					})
+			}
 			return
 		}
 
-		await personService.create(newPerson).then(createdPerson => {
-			setPersons(persons.concat(createdPerson))
-			setMessage(`Added ${newPerson.name}.`);
-			setTimeout(() => {
-				setMessage(null);
-			}, 2000);
-			setNewName("")
-			setNewNumber("")
-		})
+		personService.create(newPerson)
+			.then(createdPerson => {
+				setPersons(persons.concat(createdPerson))
+				setNotification({ message: `Added ${newPerson.name}.`, type: "success" });
+				setTimeout(() => setNotification({ message: null, type: "success" }), 5000);
+				setNewName("")
+				setNewNumber("")
+			})
+			.catch(error => {
+				setNotification({ message: `Error adding ${newPerson.name}: ${error.response?.data?.error || error.message}`, type: "error" });
+				setTimeout(() => setNotification({ message: null, type: "success" }), 5000);
+			})
 	}
 
 	const handleNameChange = (event) => {
@@ -65,16 +78,24 @@ const App = () => {
 	const handleDelete = (id) => {
 		const person = persons.find(p => p.id === id)
 		if (window.confirm(`Delete ${person.name}?`)) {
-			personService.deleteById(id).then(() => {
-				setPersons(persons.filter(p => p.id !== id))
-			})
+			personService.deleteById(id)
+				.then(() => {
+					setPersons(persons.filter(p => p.id !== id))
+					setNotification({ message: `Deleted ${person.name}.`, type: "success" });
+					setTimeout(() => setNotification({ message: null, type: "success" }), 5000);
+				})
+				.catch(error => {
+					setNotification({ message: `Information of ${person.name} has already been removed from server`, type: "error" });
+					setTimeout(() => setNotification({ message: null, type: "success" }), 5000);
+					setPersons(persons.filter(p => p.id !== id))
+				})
 		}
 	}
 
 	return (
 		<div>
 			<h2>Phonebook</h2>
-			<Notification message={message} />
+			<Notification notification={notification} />
 			<Filter value={searchTerm} onChange={handleSearchChange} />
 
 			<h3>Add a new</h3>

@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 export const useNotifications = () => {
-	const [message, setMessage] = useState(null);
+	const [notification, setNotification] = useState({ message: null, type: "success" });
 	return {
-		message, setMessage
+		notification, setNotification
 	}
 }
